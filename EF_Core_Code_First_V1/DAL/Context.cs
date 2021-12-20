@@ -12,10 +12,16 @@ namespace EF_Core_Code_First_V1.DAL
     {
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost;Database=StoreDB;User Id=sa;Password=qwe123;");
+        }
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            modelbuilder.ApplyConfigurationsFromAssembly(typeof(User).Assembly);
+            modelbuilder.ApplyConfigurationsFromAssembly(typeof(UserOrder).Assembly);
+
+            base.OnModelCreating(modelbuilder);
         }
     }
 }
